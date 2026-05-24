@@ -9,22 +9,35 @@ int n;
         if(dp[currIdx]!=0)return dp[currIdx];
 
         int jumps = 1;
+        bool increase=true,decrease=true;
         
         for(int x=1;x<=d;x++){
+        if(!increase && !decrease)break;
         //1st condition 
+        if(increase){
         if((currIdx+x)<n && nums[currIdx]>nums[currIdx+x] ){
            jumps = max(jumps,1+solve(currIdx+x,d));
         }
-        else break;
+        else increase=false;
         }
-
-        for(int x=1;x<=d;x++){
-        //2st condition 
-        if((currIdx-x)>=0 && nums[currIdx]>nums[currIdx-x] ){
+         //2nd condition
+        if(decrease){
+             if((currIdx-x)>=0 && nums[currIdx]>nums[currIdx-x] ){
            jumps = max(jumps,1+solve(currIdx-x,d));
         }
-        else break;
+        else decrease=false;
+        
         }
+
+        }
+
+        // for(int x=1;x<=d;x++){
+        // //2st condition 
+        // if((currIdx-x)>=0 && nums[currIdx]>nums[currIdx-x] ){
+        //    jumps = max(jumps,1+solve(currIdx-x,d));
+        // }
+        // else break;
+        // }
         return dp[currIdx] = jumps;
      }
     int maxJumps(vector<int>& arr, int d) {
