@@ -1,13 +1,22 @@
 class Solution {
 public:
 int noOfWords(string message){
-    stringstream ss(message);
-    string word;
+    // stringstream ss(message);
+    // string word;
+    // int cnt=0;
+    // while(ss>>word){
+    //     cnt++;
+    // }
     int cnt=0;
-    while(ss>>word){
-        cnt++;
+
+    int n = message.length();
+
+    for(int i=0;i<n;i++){
+        if(message[i]==' '){
+            cnt++;
+        }
     }
-    return cnt;
+    return cnt+1;
 }
     string largestWordCount(vector<string>& messages, vector<string>& senders) {
         int n = messages.size();
