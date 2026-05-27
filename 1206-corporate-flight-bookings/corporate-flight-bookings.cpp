@@ -1,13 +1,24 @@
 class Solution {
 public:
     vector<int> corpFlightBookings(vector<vector<int>>& bookings, int n) {
-        vector<int>ans(n,0);
-        int m = bookings.size();
-        for(int i=0;i<m;i++){
+        //difference Array technique
 
-            for(int j=bookings[i][0]-1;j<bookings[i][1];j++){
-                ans[j]+=bookings[i][2];
+        vector<int>diff(n,0);
+
+        for(vector<int>&booking:bookings){
+            int l = booking[0]-1;
+            int r = booking[1]-1;
+            int seatsReserved = booking[2];
+            
+            diff[l] += seatsReserved;
+            if(r+1<n){
+            diff[r+1] -= seatsReserved;
             }
+
         }
- return ans;   }
+
+        for(int i=1;i<n;i++){
+            diff[i] += diff[i-1];
+        }
+    return diff;}
 };
