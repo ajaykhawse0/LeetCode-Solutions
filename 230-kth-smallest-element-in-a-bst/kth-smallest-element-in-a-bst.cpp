@@ -10,19 +10,22 @@
  * };
  */
 class Solution {
-public:priority_queue<int,vector<int>,greater<int>>pq;
+    public:
+// public:priority_queue<int,vector<int>,greater<int>>pq;
+vector<int>arr;
     void traverse(TreeNode*root){
         if(!root)return;
-        pq.push(root->val);
+        // pq.push(root->val);
         traverse(root->left);
+        arr.push_back(root->val);
         traverse(root->right);
     }
     int kthSmallest(TreeNode* root, int k) {
         
         traverse(root);
-        for(int i=0;i<k-1;i++){
-            pq.pop();
-        }
-        return pq.top();
+        // for(int i=0;i<k-1;i++){
+        //     pq.pop();
+        // }
+        return arr[k-1];
     }
 };
