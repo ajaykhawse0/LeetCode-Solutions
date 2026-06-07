@@ -1,16 +1,16 @@
 class RecentCounter {
-public:vector<int>req;
-int start;
+public:queue<int>req;
+
     RecentCounter() {
-        start=0;
+        
     }
     
     int ping(int t) {
-        req.push_back(t);
-        while(req[start]<t-3000){
-            start++;
+        req.push(t);
+        while(req.front()<t-3000){
+            req.pop();
         }
-        return req.size()-start;
+        return req.size();
     }
 };
 
