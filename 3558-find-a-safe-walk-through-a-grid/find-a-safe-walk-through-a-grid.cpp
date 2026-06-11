@@ -6,14 +6,13 @@ vector<vector<int>>dirs={{1,0},{0,1},{-1,0},{0,-1}};
         int n = grid[0].size();
 
         priority_queue<P>q;
-        vector<vector<int>>vis(m,vector<int>(n,0));
-        if(grid[0][0]==1){
-            q.push({health-1,{0,0}});
-        }
-        else{
-             q.push({health,{0,0}});
-        }
-        vis[0][0]=1;
+        vector<vector<int>>best(m,vector<int>(n,-1));
+        
+        int startHealth = health-grid[0][0];
+        if(startHealth<=0)return false;
+        q.push({startHealth,{0,0}});
+        best[0][0]=startHealth;
+        
 
         while(!q.empty()){
             int remainHealth = q.top().first;
@@ -23,17 +22,27 @@ vector<vector<int>>dirs={{1,0},{0,1},{-1,0},{0,-1}};
             q.pop();
             
             if(row==m-1 && col == n-1 ){
-                if(remainHealth>=1)return true;
-            }
+               
+                    cout<<best[row][col];
+                    return true;}
+
+            
+            if(remainHealth<best[row][col])continue;
             
             for(auto&dir:dirs){
                 int nr = row+dir[0];
                 int nc = col+dir[1];
 
-                if(nr>=0 && nr<m && nc>=0 && nc<n && !vis[nr][nc]){
-                    vis[nr][nc]=1;
-                    grid[nr][nc]==1?q.push({remainHealth-1,{nr,nc}}):q.push({remainHealth,{nr,nc}});
-                }
+                if(nr<0 || nr>=m || nc<0 || nc>=n )continue;
+
+                   int newHealth = remainHealth - grid[nr][nc];
+
+                   if(newHealth>0 && newHealth>best[nr][nc]){
+                    best[nr][nc]=newHealth;
+                    q.push({newHealth,{nr,nc}});
+                   }
+                  
+                
             }
 
             
