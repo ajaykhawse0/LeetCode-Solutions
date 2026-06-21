@@ -1,27 +1,33 @@
 class Solution {
 public:
-    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
-        int start = newInterval[0];
-        int end = newInterval[1];
+    vector<vector<int>>mergeIntervals(vector<vector<int>>& intervals){
+        sort(intervals.begin(),intervals.end());
 
+        vector<vector<int>>results;
+        results.push_back(intervals[0]);
         int n = intervals.size();
-
-        int i=0;
-        vector<vector<int>>result;
-        while(i<n && intervals[i][1] < start ){
-            result.push_back(intervals[i]);
-         i++;
-         }
-        while(i<n && intervals[i][0]<=newInterval[1]){
-            newInterval[0]=min(newInterval[0],intervals[i][0]);
-            newInterval[1]=max(newInterval[1],intervals[i][1]);
-        i++;}
-        // cout<<newInterval[0]<<newInterval[1];
-        result.push_back(newInterval);
-
-        while(i<n){
-            result.push_back(intervals[i]);
-            i++;
+        
+        for(int i=1;i<n;i++){
+            if(results.back()[1]<intervals[i][0]){
+                results.push_back(intervals[i]);
+            }
+            else{
+                results.back()[1] = max(results.back()[1],intervals[i][1]);
+            }
         }
-    return result;}
+return results;
+    }
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        //intervals is alreday sorted so we will just simulate
+        //We have two options 
+        //1.Simply insert the newInterval at the very end And then call the helper
+        //mergeInterval function that will take care of the overalpping ones 
+        
+        intervals.push_back(newInterval);
+
+        return mergeIntervals(intervals);
+
+
+        //2.Optimal approach that is to handle overlapping interval on the go;
+    }
 };
