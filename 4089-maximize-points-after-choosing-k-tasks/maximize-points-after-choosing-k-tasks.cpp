@@ -1,27 +1,26 @@
 class Solution {
-public:typedef long long ll;
+public:
     long long maxPoints(vector<int>& technique1, vector<int>& technique2, int k) {
+        long long res = 0;
+        
+        priority_queue<int,vector<int>,greater<int>>diff;
         int n = technique1.size();
-        vector<vector<int>>combine(n,vector<int>(2));
-
         for(int i=0;i<n;i++){
-            combine[i][0] = technique1[i];
-            combine[i][1] = technique2[i];
+            res += max(technique1[i],technique2[i]);
+
+            if(technique1[i]>=technique2[i]){
+                k--;
+            }
+            else{
+                diff.push(technique2[i]-technique1[i]);
+            }
         }
-     
 
-sort(combine.begin(), combine.end(), [](const vector<int>& a, const vector<int>& b) {
-    return (a[0] - a[1]) > (b[0] - b[1]);   // descending
-});
-   
-   ll res=0;
-   for(int i=0;i<k;i++){
-    res += combine[i][0];
-   }
-
-   for(int i=k;i<n;i++){
-    res += max(combine[i][0],combine[i][1]);
-   }
-     
+        while(k>0 && !diff.empty()){
+            res -= diff.top();
+            k--;
+            diff.pop();
+        }
+        // diff.clear();
     return res;}
 };
