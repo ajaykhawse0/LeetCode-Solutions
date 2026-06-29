@@ -1,44 +1,35 @@
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
- *     long long val;
+ *     int val;
  *     TreeNode *left;
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(long long x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(long long x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
 class Solution {
 public:
     vector<double> averageOfLevels(TreeNode* root) {
-        unordered_map<long long,long long>sum;
-        unordered_map<long long,long long>cnt;
+        vector<double>result;
 
-        queue<pair<TreeNode*,long long>>q;
-        q.push({root,0});
-        long long maxl=0;
+        queue<TreeNode*>q;
+        q.push(root);
+
         while(!q.empty()){
-            auto[node,level]=q.front();
-            maxl = max(maxl,level);
-            q.pop();
-            sum[level] += node->val;
-            cnt[level]++;
+            int sz = q.size();
+            double sum = 0;
 
-            if(node->left){
-                q.push({node->left,level+1});
-            }
-            if(node->right){
-                q.push({node->right,level+1});
+            for(int i=0;i<sz;i++){
+                auto node = q.front();
+                q.pop();
+                sum += node->val;
+                if(node->left)q.push(node->left);
+                if(node->right)q.push(node->right);
             }
 
-
+            result.push_back((double)sum/sz);
         }
-        vector<double>ans(maxl+1);
-        for(auto&[lev,count]:cnt){
-            ans[lev] = (double)sum[lev]/count;
-        }
-
-return ans;
-    }
+    return result;}
 };
