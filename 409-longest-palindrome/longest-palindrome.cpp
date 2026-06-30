@@ -1,24 +1,26 @@
 class Solution {
 public:
     int longestPalindrome(string s) {
-        unordered_map<char,int>mpp;
+        vector<int>freq(58,0);
+        bool odd = false;
+        int len = 0;
         for(char c:s){
-            mpp[c]++;
-        }
-        int evenLength=0;
-        int odd = 0;
-        for(auto&[c,freq]:mpp){
-            if(freq%2==0){
-                evenLength += freq;
-            }
-            else{
-                evenLength += (freq-1);
-                odd = 1;
-            }
-        }
-        if(odd==1){
-            evenLength+=1;
+            freq[c-'A']++;
         }
 
-    return evenLength;}
+        for(int i=0;i<58;i++){
+            if(freq[i]&1){
+                odd = true;
+                len += freq[i]-1;
+            }
+            else{
+                len += freq[i];
+            }
+        }
+
+        if(odd){
+            len++;
+        }
+        return len;
+    }
 };
