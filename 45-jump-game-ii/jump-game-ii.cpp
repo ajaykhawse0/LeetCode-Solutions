@@ -1,27 +1,35 @@
 class Solution {
 public:
-    vector<int>memo;
-    int n;
-    int INF = 1e9;
+    int jump(vector<int>& nums) {
+        int n = nums.size();
+        if (n == 1)
+            return 0;
 
-    int solve(int idx,vector<int>&nums){
-        if(idx>=n-1)return 0;
-        if(memo[idx]!=INF)return memo[idx];
+        if (nums[0] == 0)
+            return -1;
+        int jumps = 1;
+        int currJump = nums[0];
+        int maxReach = nums[0];
 
-        int mini = INF;
+        for (int i = 1; i < n; i++) {
+            if (i == n - 1)
+                return jumps;
 
-        for(int i=1;i<=nums[idx];i++){
-            mini = min(mini,1+solve(i+idx,nums)); 
+            maxReach = max(maxReach, i + nums[i]);
+
+            currJump--;
+
+            if (currJump == 0) {
+                jumps++;
+
+                // if by chance current index cannoot reached return -1
+                if (i >= maxReach)
+                    return -1;
+
+                currJump = maxReach - i; // steps left;
+            }
         }
 
-        return memo[idx] = mini;
-    }
-    int jump(vector<int>& nums) {
-        if(nums.size()==1)return 0;
-        if(nums[0]==0)return-1;
-        n = nums.size();
-        memo.assign(n,INF);
-        int val = solve(0,nums);
-        return (val==INF)?-1:val;
+        return -1;
     }
 };
