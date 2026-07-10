@@ -1,21 +1,19 @@
 class Solution {
 public:
     bool isGood(vector<int>& nums) {
-        int maxEle = *max_element(nums.begin(),nums.end());
+        int mx = *max_element(nums.begin(),nums.end());
         int n = nums.size();
-        if(n!=maxEle+1)return false;
-        unordered_map<int,int>mpp;
-        int maxEleCnt=0;
-        for(auto&i:nums){
-            mpp[i]++;
-            if(i==maxEle)maxEleCnt++;
+        if(n!=mx+1)return false;
+        unordered_set<int>st;
+        int cnt = 0;
+        for(int i=0;i<n;i++){
+           if(nums[i]==mx)cnt++;
+           st.insert(nums[i]);
         }
-      
         for(int i=1;i<n;i++){
-               if (!mpp.contains(i)) return false;        
+            if(!st.count(i))return false;
         }
-          
-        
-      return maxEleCnt==2?true:false;  
+
+        return cnt==2?true:false;
     }
 };
