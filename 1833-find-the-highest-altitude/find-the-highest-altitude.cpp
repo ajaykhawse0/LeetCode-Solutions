@@ -1,12 +1,12 @@
 class Solution {
 public:
     int largestAltitude(vector<int>& gain) {
-        int alt = 0;
-        int maxAlt = 0;
-
-        for(int&g:gain){
-            alt += g;
-            maxAlt = max(maxAlt,alt);
+    int ans =0,curr=0;
+    for(int g:gain){
+        curr += g;
+        if(curr>ans){
+            ans = curr;
         }
-    return maxAlt;}
+    }      
+    return ans;}
 };
