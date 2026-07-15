@@ -10,20 +10,27 @@
  */
 class Solution {
 public:
-    int res = 0;
-    ListNode*left;
-    void dfs(ListNode*right){
-        if(right->next){
-            dfs(right->next);
-        }
-
-        res = max(res,left->val+right->val);
-
-        left=left->next;
-    }
     int pairSum(ListNode* head) {
-        left=head;
-        dfs(head);
-        return res;
+    //simply we have to add first and last node values while decreaing the right pointer and increasing the left one
+
+    //brute force
+    vector<int>arr;
+    ListNode*temp = head;
+    while(temp){
+        arr.push_back(temp->val);
+        temp = temp->next;
+    }    
+    int l = 0;
+    int r = arr.size()-1;
+    int ans = 0;
+
+    while(l<r){
+        ans = max(ans,arr[l]+arr[r]);
+        l++;
+        r--;
+    }
+    return ans;
+
+
     }
 };
