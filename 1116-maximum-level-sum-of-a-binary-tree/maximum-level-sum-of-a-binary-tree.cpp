@@ -12,19 +12,25 @@
 class Solution {
 public:
     int maxLevelSum(TreeNode* root) {
-        int maxSum = INT_MIN;
-        int maxLevel = 1;
-        int level=1;
+       if(!root)return 1; 
+        
+        //level wise use bfs
+
         queue<TreeNode*>q;
         q.push(root);
+        int level = 1;
+        int maxSum = root->val;
+        int maxLevel = 1;
+
         while(!q.empty()){
-            int size = q.size();
+            auto size = q.size();
             int sum = 0;
+
             for(int i=0;i<size;i++){
-                auto node=q.front();
+                auto node = q.front();
                 q.pop();
-                sum+=node->val;
-                
+                sum += node->val;
+
                 if(node->left){
                     q.push(node->left);
                 }
@@ -32,12 +38,14 @@ public:
                     q.push(node->right);
                 }
             }
+
             if(sum>maxSum){
-                maxSum=sum;
-                maxLevel=level;
+                maxSum = sum;
+                maxLevel = level;
             }
             level++;
 
         }
+
     return maxLevel;}
 };
