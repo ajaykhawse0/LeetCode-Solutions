@@ -2,15 +2,27 @@ class Solution {
 public:
     int thirdMax(vector<int>& nums) {
         unordered_set<int>st(nums.begin(),nums.end());
-        priority_queue<int>pq(st.begin(),st.end());
+        
 
-        if(pq.size()<3)return pq.top();
-        int i=0;
-        while(!pq.empty()){
-            i++;
-            if(i==3)return pq.top();
-            pq.pop();
+        if(st.size()<3)return *max_element(nums.begin(),nums.end());
+        int maxFirst = INT_MIN;
+        int maxSecond = INT_MIN;
+        int maxThird = INT_MIN;
+
+        for(int x:st){
+            if(x>maxFirst){
+                maxThird = maxSecond;
+                maxSecond = maxFirst;
+                maxFirst  = x;
+            }
+            else if(x>maxSecond){
+                maxThird = maxSecond;
+                
+                maxSecond  = x;
+            }
+            else if(x>maxThird){
+                maxThird = x;
+            }
         }
-        return -1;
-    }
+    return maxThird;}
 };
