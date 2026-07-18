@@ -1,15 +1,13 @@
 class Solution {
 public:
     int thirdMax(vector<int>& nums) {
-        unordered_set<int>st(nums.begin(),nums.end());
-        
+       
+        long long maxFirst = LLONG_MIN;
+        long long maxSecond = LLONG_MIN;
+        long long maxThird = LLONG_MIN;
 
-        if(st.size()<3)return *max_element(nums.begin(),nums.end());
-        int maxFirst = INT_MIN;
-        int maxSecond = INT_MIN;
-        int maxThird = INT_MIN;
-
-        for(int x:st){
+          for(int &x:nums){
+            if(x==maxFirst ||x==maxSecond ||x==maxThird) continue;      
             if(x>maxFirst){
                 maxThird = maxSecond;
                 maxSecond = maxFirst;
@@ -24,5 +22,6 @@ public:
                 maxThird = x;
             }
         }
+        if(maxThird==LLONG_MIN)return maxFirst;
     return maxThird;}
 };
