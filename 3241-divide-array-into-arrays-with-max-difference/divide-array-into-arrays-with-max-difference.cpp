@@ -6,13 +6,13 @@ public:
         ;
         vector<vector<int>>ans;
 
-        for(int i=0;i+2<n;i+=3){
+        for(int i=0;i<n;i+=3){
             if(nums[i+2]-nums[i]>k)return {};
-            vector<int>temp;
-            for(int j=i;j<i+3;j++){
-              temp.push_back(nums[j]);
+            else{
+                ans.push_back({nums[i],nums[i+1],nums[i+2]});
             }
-            ans.push_back(temp);
+            
+            
         }
  return ans;   }
 };
