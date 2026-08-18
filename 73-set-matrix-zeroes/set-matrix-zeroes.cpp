@@ -1,57 +1,49 @@
 class Solution {
 public:
-    void setZeroes(vector<vector<int>>& matrix) {
-        int m = matrix.size();
-        int n = matrix[0].size();
-        // First Row zero Check
-        bool firstRowZero = false;
-        for (int j = 0; j < n; j++) {
-            if (matrix[0][j] == 0) {
-                firstRowZero = true;
+    void setZeroes(vector<vector<int>>& mat) {
+        int m = mat.size();
+        int n = mat[0].size();
+        bool firstRow = false,firstCol = false;
+
+        for(int j=0;j<n;j++){
+            if(mat[0][j]==0){
+                firstRow = true;
                 break;
             }
         }
-        
-        // First Row zero Check
-        bool firstColZero = false;
-        for (int i = 0; i < m; i++) {
-            if (matrix[i][0] == 0) {
-                firstColZero = true;
+        for(int i=0;i<m;i++){
+            if(mat[i][0]==0){
+                firstCol = true;
                 break;
             }
         }
 
-        //mark the row and col we want to make zero in the 0th row or col
-
-        for(int i=1;i<m;i++){
-            for(int j=1;j<n;j++){
-                if(matrix[i][j]==0){
-                    matrix[0][j]=0;
-                    matrix[i][0]=0;
-                }
-            }
-        }
-
-        //now mark the whole row and col zero
-
-        for(int i=1;i<m;i++){
-            for(int j=1;j<n;j++){
-                if(matrix[i][0]==0 || matrix[0][j]==0){
-                    matrix[i][j]=0;
-                }
-            }
-        }
-         
-         if(firstRowZero){
+        for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
-                matrix[0][j]=0;
+                if(i==0 || j==0)continue;
+                if(mat[i][j]==0){
+                    mat[i][0] = 0;
+                    mat[0][j] = 0;
+                }
             }
-         }
-         if(firstColZero){
-            for(int i=0;i<m;i++){
-                matrix[i][0]=0;
+        }
+        for(int i=1;i<m;i++){
+            for(int j=1;j<n;j++){
+                if(mat[i][0]==0 || mat[0][j]==0){
+                    mat[i][j] = 0;
+                }
             }
-         }
+        }
 
+        if(firstRow){
+            for(int i=0;i<n;i++){
+                mat[0][i] = 0;
+            }
+        }
+        if(firstCol){
+            for(int i=0;i<m;i++){
+                mat[i][0] = 0;
+            }
+        }
     }
 };
