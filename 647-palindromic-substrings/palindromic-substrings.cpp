@@ -1,20 +1,19 @@
 class Solution {
-public:int count=0,n;
-    int countSubstrings(string s) {
-        n = s.length();
+public:
+int count  = 0;
 
-        for(int i=0;i<n;i++){
-            extendedPalindrome(s,i,i);
-            extendedPalindrome(s,i,i+1);
-        }
-    return count;}
-
-    void extendedPalindrome(string s,int l,int r){
-        while(l>=0 && r<n){
-            if(s[l]!=s[r])return ;
+    void countAroundCenter(int l,int r,string &s,int n){
+        while(l>=0  && r<n && s[l]==s[r]){
             count++;
-            l--;
             r++;
+            l--;
         }
     }
+    int countSubstrings(string s) {
+        int n = s.size();
+        for(int i=0;i<n;i++){
+            countAroundCenter(i,i,s,n);
+            countAroundCenter(i,i+1,s,n);
+        };
+ return count;   }
 };
