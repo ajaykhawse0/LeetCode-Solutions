@@ -12,25 +12,25 @@ class Solution {
 public:
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         ListNode*dummy = new ListNode(0);
-        ListNode*temp =  dummy;
+        ListNode*newHead = dummy;
 
-        priority_queue<int,vector<int>,greater<int>>minHeap;
+        priority_queue<int,vector<int>,greater<int>>pq;
 
-        for(ListNode*list:lists){
-            ListNode*curr=list;
+        for(auto list:lists){
+            auto curr = list;
             while(curr){
-                minHeap.push(curr->val);
-                curr=curr->next;
+                pq.push(curr->val);
+                curr = curr->next;
             }
         }
 
-        while(!minHeap.empty()){
-            ListNode*node = new ListNode(minHeap.top());
-            minHeap.pop();
-            temp->next=node;
-            temp=temp->next;
+        while(!pq.empty()){
+            ListNode*node =  new ListNode(pq.top());
+            pq.pop();
+            newHead->next = node;
+            newHead = newHead->next; 
         }
+
         return dummy->next;
     }
-
 };
