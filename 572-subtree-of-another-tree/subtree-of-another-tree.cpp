@@ -11,19 +11,18 @@
  */
 class Solution {
 public:
-    bool isIdentical(TreeNode*P,TreeNode*Q){
+    bool isSameTree(TreeNode*P,TreeNode*Q){
         if(!P && !Q)return true;
         if(!P || !Q)return false;
 
-        return P->val == Q->val && isIdentical(P->left,Q->left) &&isIdentical(P->right,Q->right); 
+        return P->val == Q->val && isSameTree(P->left,Q->left) && isSameTree(P->right,Q->right);
     }
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
-        if(!root)return false;
+        if(!root && !subRoot)return true;
         if(!root || !subRoot)return false;
 
-        if(isIdentical(root,subRoot))return true;
+        if(isSameTree(root,subRoot))return true;
 
         return isSubtree(root->left,subRoot) || isSubtree(root->right,subRoot);
-
     }
 };
