@@ -2,35 +2,23 @@ class Solution {
 public:
     string evaluate(string s, vector<vector<string>>& knowledge) {
         unordered_map<string,string>mpp;
-        int n = s.length();
-
-        for(auto&k:knowledge){
+        for(auto k:knowledge){
             mpp[k[0]]=k[1];
         }
-        string ans="";
+        bool andar = false;
         string key="";
-        bool open = false;
-        for(int i=0;i<n;i++){
-            if(s[i]=='('){
-                open = true;
-            }
-           else if(s[i]==')'){
-                open = false;
-                if(mpp.count(key)){
-                    ans+=mpp[key];
-                }
-                else{
-                    ans += '?';
-                }
+        string ans="";
+        for(char c:s){
+            if(c=='('){
+                andar = true;
                 key="";
             }
-            else if(open){
-                key+=s[i];
+            else if(c==')'){
+                andar = false;
+                ans += mpp.count(key)?mpp[key]:"?";
             }
-            else{
-                ans+=s[i];
-            }
+            else if(andar)key+=c;
+            else ans+=c;
         }
-return ans;
-    }
+ return ans;   }
 };
