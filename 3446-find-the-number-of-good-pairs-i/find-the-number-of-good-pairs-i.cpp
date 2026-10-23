@@ -1,12 +1,34 @@
+
 class Solution {
 public:
-    int numberOfPairs(vector<int>& nums1, vector<int>& nums2, int k) {
-        int n = nums1.size();
-        int m = nums2.size();
-        int res = 0;
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(nums1[i]%(nums2[j]*k)==0)res++;}
+    long long numberOfPairs(vector<int>& nums1,
+                            vector<int>& nums2, int k) {
+        unordered_map<int, int> freq;
+
+        for (int x : nums2) {
+            freq[x]++;
         }
-  return res;  }
+
+        long long res = 0;
+
+        for (int a : nums1) {
+            if (a % k != 0) continue;
+
+            int x = a / k;
+
+            for (int d = 1; 1LL * d * d <= x; d++) {
+                if (x % d != 0) continue;
+
+                // d is a divisor of x
+                res += freq[d];
+
+                // x / d is the paired divisor
+                if (d != x / d) {
+                    res += freq[x / d];
+                }
+            }
+        }
+
+        return res;
+    }
 };
