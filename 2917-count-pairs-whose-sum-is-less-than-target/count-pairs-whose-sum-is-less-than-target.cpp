@@ -1,13 +1,23 @@
 class Solution {
 public:
     int countPairs(vector<int>& nums, int target) {
-        int n = nums.size();
-        int cnt  = 0;
+        sort(nums.begin(),nums.end());
 
-        for(int i=0;i<n;i++){
-            for(int j=i+1;j<n;j++){
-                if(nums[j]+nums[i]<target)cnt++;
+        int i = 0;
+        int j = nums.size() - 1;
+        int count = 0;
+
+        while( i < j)
+        {
+            if(nums[i] + nums[j] < target)
+            {
+                count += (j - i);
+                i++;
+            }else{
+                j--;
             }
         }
-    return cnt;}
+
+        return count;
+    }
 };
