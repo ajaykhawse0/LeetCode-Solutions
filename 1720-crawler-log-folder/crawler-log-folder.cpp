@@ -1,17 +1,16 @@
 class Solution {
 public:
     int minOperations(vector<string>& logs) {
-        vector<string>st;
+        int folders = 0;
 
         for(string log:logs){
             if(log=="./")continue;
             if(log=="../"){
-               if(!st.empty()) st.pop_back();
+                if(folders)folders--;
             }
             else{
-                st.push_back(log);
+                folders++;
             }
-            
         }
-    return st.size();}
+ return folders;   }
 };
