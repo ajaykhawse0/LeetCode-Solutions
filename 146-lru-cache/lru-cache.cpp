@@ -45,7 +45,19 @@ struct Node{
         temp->prev = newNode;
         head->next =  newNode;
     }
-    
+    void moveToFront(Node*node){
+        //Deattach
+         node->prev->next = node->next;
+         node->next->prev = node->prev;
+
+         //Attach after head
+
+         Node*temp = head->next;
+         head->next = node;
+         node->next = temp;
+         temp->prev = node;
+         node->prev = head; 
+    }
     void deleteNode(Node*delNode){
         Node*prevNode =  delNode->prev;
         Node*nextNode =  delNode->next;
@@ -59,24 +71,36 @@ struct Node{
     int get(int key) {
         if(mpp.count(key)){
             Node*resNode = mpp[key];
-            mpp.erase(key);
 
-            deleteNode(resNode);
-            reAddNode(resNode);
+            moveToFront(resNode);
 
-            mpp[key]=head->next;
             return resNode->val;
         }
 
         return -1;
     }
+    // int get(int key) {
+    //     if(mpp.count(key)){
+    //         Node*resNode = mpp[key];
+    //         mpp.erase(key);
+
+    //         deleteNode(resNode);
+    //         reAddNode(resNode);
+
+    //         mpp[key]=head->next;
+    //         return resNode->val;
+    //     }
+
+    //     return -1;
+    // }
     
     void put(int key, int value) {
         if(mpp.count(key)){
             //node key is already present remove it
             Node*existing = mpp[key];
-            deleteNode(existing);
-            mpp.erase(key);
+            existing->val = value;
+            moveToFront(existing);
+            return ;
         }
         if(mpp.size()==capacity){
             //remove the node from last;
@@ -89,6 +113,24 @@ struct Node{
         addNewNode(key,value);
         mpp[key] = head->next;
     }
+    // void put(int key, int value) {
+    //     if(mpp.count(key)){
+    //         //node key is already present remove it
+    //         Node*existing = mpp[key];
+    //         deleteNode(existing);
+    //         mpp.erase(key);
+    //     }
+    //     if(mpp.size()==capacity){
+    //         //remove the node from last;
+    //         Node * node = tail->prev;
+    //         int Nodekey = node->key;
+    //         mpp.erase(Nodekey);
+    //         deleteNode(node);
+    //     }
+
+    //     addNewNode(key,value);
+    //     mpp[key] = head->next;
+    // }
 };
 
 /**
