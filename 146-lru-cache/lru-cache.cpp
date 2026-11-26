@@ -64,7 +64,7 @@ struct Node{
         prevNode->next = nextNode;
         nextNode->prev =  prevNode;
 
-        // delete delNode;
+        delete delNode;
 
         return;
     }
